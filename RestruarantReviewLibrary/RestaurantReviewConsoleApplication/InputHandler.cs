@@ -10,71 +10,64 @@ namespace RestaurantReviewConsoleApplication
 {
 	public class InputHandler
 	{
-		public string input { get; set; }
+		public string _input { get; set; }
 
 		public InputHandler()
 		{
-			// Default constructor
+
 		}
 
-		// Determine if input is add or show
 		public void ValInput(string input)
 		{
-			try	// try block to catch out of index operations on input string
+			Console.Write("Validating input ...\n");
+			input = input.ToLower();	
+			if (input == "add")
 			{
-				if (input.Substring(0, 3) == "Add" || input.Substring(0, 3) == "add")
-				{
-					Console.Write("Adding new entry...\n");
-					AddEntry(input);
-				}
-				else if (input.Substring(0, 4) == "Show" || input.Substring(0, 4) == "show")
-				{
-					if (input.Substring(0, 4) == "Show")    // check if by ID
-					{
-						Console.Write(input.Substring(5));
-						Console.ReadKey();
-					}
-
-					else if (input.Substring(5) == "All")   // check to display all
-					{
-						Console.Write("Printing all ... ");
-						Console.ReadKey();
-					}
-
-					else    // invalid input
-					{
-						Console.Write("Something went wrong.\n");
-					}
-				}
-				else
-				{
-					// Invalid input
-					Console.Write("\nInvalid Input\n" +
-									"Press any key to return\n");
-					Console.ReadKey();
-				}
+				Add();
 			}
-			catch(IndexOutOfRangeException e)
+			else if (input == "show")
 			{
-				Console.Write("I made a mistake, sorry about that\n." +
-								"Press any key to continue...\n");
+				Show();
+			}
+			else if (input == "search")
+			{
+				Search();
+			}
+			else
+			{
+				// Bad input
+				Console.Write("Invalid input.\n"+
+							  "Press any key to continue...");
 				Console.ReadKey();
 			}
 		}
 
-		public void AddEntry(string input)
+		public void Add()
 		{
+			// Creates new data member
+			Console.Clear();
+			Console.WriteLine("Name: ");
+			string add_input = "";
+			Restaurant restaurant = new Restaurant();
+			while (add_input != "q" || add_input != "quit")
+			{
+				add_input = Console.ReadLine();
+				restaurant.Name = add_input;
+
+			}
 
 		}
 
-		public void Show(int id)
+		public void Show()
 		{
-
+			Console.Write("Showing...");
+			Console.ReadKey();
 		}
 
-		public void Show(string all)
+		public void Search()
 		{
-
+			Console.Write("Searching...");
+			Console.ReadKey();
 		}
 	}
 }

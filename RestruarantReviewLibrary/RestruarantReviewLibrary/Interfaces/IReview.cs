@@ -9,7 +9,7 @@ namespace RestruarantReviewLibrary
 	interface IReview
 	{
 		// Set of attribues and methods all Review objects should implement
-		int Score { get; set; }
+		int Score { get; set; }				// 1-5 stars
 		string ReviewerName { get; set; }
 		string ReviewMessage { get; set; }
 	}
