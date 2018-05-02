@@ -72,7 +72,7 @@ select * from
 --report revenue from iphone sales
 -- get number of orders with id = 4
 -- multiply that number with results from (select price from dbo.products where name == 'iphone')
-select count(*) from [order] where id = 4;
+select (count(*) from [order] where id = 4) * ();
 select * from [order]
 
 --increase iphone price
