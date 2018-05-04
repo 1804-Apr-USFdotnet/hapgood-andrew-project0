@@ -35,23 +35,11 @@ namespace ClientLibrary
 			restuarant_crud.AddRestuarant(name, address);
 		}
 
-		public void AddReview(string _name, string _score, string _message, string _id)
+		public void AddReview(string _name, int _score, int _id, string _message)
 		{
 			// check to see if score can be *.ToInt()
 			DataAccess.DataAccess restuaraunt_crud = new DataAccess.DataAccess();
-			int i = 0, j = 0;
-			try
-			{
-				i = Int32.Parse(_score);
-				j = Int32.Parse(_id);
-			}
-			catch (Exception e)
-			{
-				Console.Write("\nBad Restuarant ID\n");
-				return;
-			}
-
-			restuaraunt_crud.AddReview(_name,i,_message,j);
+			restuaraunt_crud.AddReview(_name,_score,_id, _message);
 		}
 
 		public List<string> GetAll()
@@ -76,7 +64,55 @@ namespace ClientLibrary
 			{
 				result.Add(temp.message);
 			}
+			UpdateDB();
 			return result;
 		}
+
+		public void UpdateDB()
+		{
+			DataAccess.DataAccess restuarant_crud = new DataAccess.DataAccess();
+			restuarant_crud.UpdateDB();
+		}
+
+		public List<ClientLibrary.MyData> GetRestuarantRating(int n)
+		{
+			DataAccess.DataAccess restuarant_crud = new DataAccess.DataAccess();
+			var temp = restuarant_crud.ReturanRating();
+			List<MyData> results = new List<MyData>();
+			// sort temp
+			temp.Sort((x,y) => y.rating.CompareTo(x.rating));
+			for (int i = 0; i < n; i++)
+			{
+				MyData t = new MyData(temp[i].rating, temp[i].name);
+				results.Add(t);
+			}
+			return results;
+		}
+
+		public List<string> Search(string input)
+		{
+			DataAccess.DataAccess restuarant_crud = new DataAccess.DataAccess();
+			List<string> results = new List<string>();
+			foreach (var t in restuarant_crud.GetRestuarants())
+			{
+				if (t.name.ToLower().Contains(input.ToLower()))
+				{
+					results.Add(t.name);
+				}
+			}
+			return results;
+		}
+	}
+	public struct MyData
+	{
+		public double rating { get; set; }
+		public string name { get; set; }
+
+		public MyData(double _rating, string _name)
+		{
+			rating = _rating;
+			name = _name;
+		}
+
 	}
 }

@@ -4,6 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ Things I need to add:
+ Get Top N working (fix sorting)
+ Search by substring
+ Unit test each method.
+ Serailize random objects for some reason
+ */
+
 namespace Project0
 {
 	class Client

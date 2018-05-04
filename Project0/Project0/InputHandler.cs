@@ -40,13 +40,18 @@ namespace Project0
 					break;
 				case "4":
 					// Get Top N reviews
+					GetTopN();
 					break;
 				case "5":
 					// Search for restuarants
+					Search();
 					break;
 				case "6":
 					// read reviews (just use id = 2 for now)
 					ReadReviews();
+					break;
+				case "update":
+					Update();
 					break;
 				default:
 					return "Invalid input.\n";
@@ -95,7 +100,7 @@ namespace Project0
 				Console.SetCursorPosition(i_coord_x[i],i_coord_y[i]);
 				inputs.Add(Console.ReadLine());
 			}
-			mh.AddReview(inputs[0], inputs[1], inputs[2], inputs[3]);
+			mh.AddReview(inputs[0], Int32.Parse(inputs[1]), Int32.Parse(inputs[2]), inputs[3]);
 		}
 
 		public void ShowAll()
@@ -124,7 +129,14 @@ namespace Project0
 
 		public void GetTopN()
 		{
-
+			// get number of restuarants to display
+			Console.Write("How many?: ");
+			int i = Int32.Parse(Console.ReadLine());
+			List<ClientLibrary.MyData> t = mh.GetRestuarantRating(i);
+			for (int j = 0; j < i; j++)
+			{
+				Console.WriteLine(t[j].name + ": " + t[j].rating + "\n");
+			}
 		}
 
 		public void ReadReviews()
@@ -133,9 +145,10 @@ namespace Project0
 							  "|Which Restuarant do you  |\n" +
 							  "|want to know aobut?      |");
 			ShowAll();
-			 
 
-			List<string> temp = mh.GetReviews(2);
+			// do error handling here later
+			int id = Int32.Parse(Console.ReadLine());
+			List<string> temp = mh.GetReviews(id);
 			foreach(var mess in temp)
 			{
 				Console.WriteLine(mess + "\n");
@@ -149,8 +162,19 @@ namespace Project0
 			string message = "|-------------------------|\n" + 
 							 "|What are you looking for?|\n" + 
 							 ">> ";
-			Console.WriteLine(message);
+			Console.Write(message);
 			string input = Console.ReadLine();
+
+			var search_resutls = mh.Search(input);
+			foreach (var t in search_resutls)
+			{
+				Console.WriteLine(t);
+			}
+		}
+
+		public void Update()
+		{
+			mh.UpdateDB();
 		}
 
 		public static bool IsAdmin()
